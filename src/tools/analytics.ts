@@ -2,7 +2,7 @@ import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { z } from 'zod';
 import client from '../api-client';
 
-const DEFAULT_LOCATION = process.env.LOCATION_ID ?? '209563';
+const DEFAULT_LOCATION = process.env.ALTEGIO_LOCATION_ID ?? '';
 
 export function registerAnalyticsTools(server: McpServer) {
   server.tool('get_analytics_overview', 'Get overall analytics summary for a location', {

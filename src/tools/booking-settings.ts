@@ -2,7 +2,7 @@ import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { z } from 'zod';
 import client from '../api-client';
 
-const DEFAULT_LOCATION = process.env.LOCATION_ID ?? '209563';
+const DEFAULT_LOCATION = process.env.ALTEGIO_LOCATION_ID ?? '';
 
 export function registerBookingSettingsTools(server: McpServer) {
   server.tool('get_online_booking_settings', 'Get online booking configuration for a location', {

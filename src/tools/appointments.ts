@@ -2,7 +2,7 @@ import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { z } from 'zod';
 import client from '../api-client';
 
-const DEFAULT_LOCATION = process.env.LOCATION_ID ?? '209563';
+const DEFAULT_LOCATION = process.env.ALTEGIO_LOCATION_ID ?? '';
 
 export function registerAppointmentsTools(server: McpServer) {
   server.tool('list_appointments', 'List appointments for a location', {

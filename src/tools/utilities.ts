@@ -2,7 +2,7 @@ import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { z } from 'zod';
 import client from '../api-client';
 
-const DEFAULT_LOCATION = process.env.LOCATION_ID ?? '209563';
+const DEFAULT_LOCATION = process.env.ALTEGIO_LOCATION_ID ?? '';
 
 export function registerUtilitiesTools(server: McpServer) {
   server.tool('get_location_license', 'Get the license/subscription info for a location', {

@@ -2,7 +2,7 @@ import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { z } from 'zod';
 import client from '../api-client';
 
-const DEFAULT_LOCATION = process.env.LOCATION_ID ?? '209563';
+const DEFAULT_LOCATION = process.env.ALTEGIO_LOCATION_ID ?? '';
 
 export function registerSalaryTools(server: McpServer) {
   server.tool('get_staff_salary_daily', 'Get daily salary breakdown for a staff member', {
