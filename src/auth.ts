@@ -3,6 +3,10 @@ import axios from 'axios';
 let userToken: string | null = null;
 
 export async function authenticate(): Promise<string> {
+  if (process.env.ALTEGIO_USER_TOKEN) {
+    userToken = process.env.ALTEGIO_USER_TOKEN;
+    return userToken;
+  }
   const res = await axios.post(
     'https://api.alteg.io/api/v1/auth',
     { login: process.env.ALTEGIO_USER_LOGIN, password: process.env.ALTEGIO_USER_PASSWORD },

@@ -12,7 +12,8 @@ client.interceptors.request.use(cfg => {
 });
 
 client.interceptors.response.use(undefined, async (err) => {
-  if (err.response?.status === 401) {
+  if (err.response?.status === 401 && !process.env.ALTEGIO_USER_TOKEN && !err.config._retried) {
+    err.config._retried = true;
     await authenticate();
     err.config.headers['Authorization'] = `Bearer ${process.env.ALTEGIO_PARTNER_TOKEN}, User ${getUserToken()}`;
     return client.request(err.config);

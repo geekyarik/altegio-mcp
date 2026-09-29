@@ -36,14 +36,16 @@ cp .env.example .env
 Edit `.env` with your Altegio credentials:
 
 ```env
-PARTNER_TOKEN=your_partner_token
-PARTNER_ID=your_partner_id
-USER_LOGIN=+380000000000
-USER_PASSWORD=your_password
-LOCATION_ID=your_location_id
+ALTEGIO_PARTNER_TOKEN=your_partner_token
+ALTEGIO_PARTNER_ID=your_partner_id
+ALTEGIO_USER_LOGIN=+380000000000
+ALTEGIO_USER_PASSWORD=your_password
+ALTEGIO_LOCATION_ID=your_location_id
+# Optional: use a user token directly instead of login/password
+ALTEGIO_USER_TOKEN=
 ```
 
-You can find these in your Altegio account under Settings → API.
+The partner token is in the Altegio Marketplace Developer Account under Account settings → Account details. If `ALTEGIO_USER_TOKEN` is set, the server skips the `/auth` login call and uses that token.
 
 ### 3. Build
 
@@ -60,7 +62,11 @@ Add to your Claude Desktop / MCP client config:
   "mcpServers": {
     "altegio": {
       "command": "node",
-      "args": ["/path/to/altegio-mcp/dist/index.js"]
+      "args": ["/path/to/altegio-mcp/dist/index.js"],
+      "env": {
+        "DOTENV_CONFIG_PATH": "/path/to/altegio-mcp/.env",
+        "DOTENV_CONFIG_OVERRIDE": "true"
+      }
     }
   }
 }
