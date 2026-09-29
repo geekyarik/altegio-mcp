@@ -72,6 +72,32 @@ Add to your Claude Desktop / MCP client config:
 }
 ```
 
+## Alternative: Altegio Pro connector (hosted)
+
+A hosted Altegio MCP connector, **Altegio Pro**, is available in claude.ai / Claude Code as a connector (tools appear as `mcp__claude_ai_Altegio_Pro__*`). It needs no partner token or `.env`: it authenticates with the delegated Altegio identity of the signed-in user, so it works even when this server's partner token is rejected.
+
+**Connecting:** enable the Altegio Pro connector in your Claude connector settings and sign in with your Altegio account. In Claude Code it then loads alongside local MCP servers.
+
+**Coverage:**
+- Locations, team members and positions, services and categories, work schedules, appointments, resources, location settings
+- Client base: segment reports (first/last visit date, lifetime spend, visit count), client cards, visit history, lookup
+- Analytics: key metrics, daily series, occupancy, sales per team member, forecasts, day-end report
+- A generic read executor (`api_search_operations` → `api_describe_operation` → `api_call_operation`) for any documented GET operation, and a guided onboarding flow
+
+**Access rights:** the connector acts with the signed-in user's rights per location. The `analytics_*` tools require the **Analytics** access right. Without it they fail with "no Analytics access right", and statistics must be derived from `schedules_get` and `appointments_list`.
+
+**Practical notes:**
+- Start with `locations_list` (`managed_only: true`) to get the `location_id`.
+- `appointments_list` can't filter by team member. Fetch the location with `page_size: 300` and filter by `team_member_id` on the client side.
+- `api_call_operation` returns full, unprojected objects and truncates large results (for example only 4 appointments per call), so prefer the curated tools for bulk reads.
+- Pages are 1-based. Follow `pagination.next_page` until it is `null`.
+
+| | This server | Altegio Pro connector |
+|---|---|---|
+| Auth | Partner token + user token/login | Signed-in Altegio user |
+| Writes | Full B2B v1 API | Curated tools only (the executor is read-only) |
+| Hosting | Local stdio | Remote (hosted connector) |
+
 ## Development
 
 ```bash
